@@ -1,4 +1,5 @@
 import { test, expect } from '../../src/fixtures/fixtures';
+import { gerarPeriodoReserva } from '../../src/utils/datas';
 
 /**
  * cobre: UI-01, UI-02
@@ -15,7 +16,7 @@ test.describe('Room booking', () => {
   });
 
   test('UI-02 reserva o quarto Single e recebe uma confirmacao', async ({ paginaInicial }) => {
-    const { checkin, checkout } = proximasDuasNoites();
+    const { checkin, checkout } = gerarPeriodoReserva();
 
     const paginaReserva = await paginaInicial.reservarQuarto('Single', { checkin, checkout });
 
@@ -31,17 +32,3 @@ test.describe('Room booking', () => {
     await paginaReserva.esperarReservaConfirmada(checkin, checkout);
   });
 });
-
-/** Retorna amanha / depois de amanha no formato YYYY-MM-DD, assim o teste nunca depende de uma data fixa. */
-function proximasDuasNoites() {
-  const paraDataISO = (d: Date) => d.toISOString().slice(0, 10);
-  const hoje = new Date();
-
-  const dataCheckin = new Date(hoje);
-  dataCheckin.setDate(hoje.getDate() + 1);
-
-  const dataCheckout = new Date(hoje);
-  dataCheckout.setDate(hoje.getDate() + 2);
-
-  return { checkin: paraDataISO(dataCheckin), checkout: paraDataISO(dataCheckout) };
-}
