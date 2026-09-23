@@ -23,7 +23,7 @@
 | 15| Evidências              | Prints, vídeo, log, trace do Playwright                              |
 | 16| Causa raiz / Observações| Hipótese de causa raiz (RCA) e observações adicionais                |
 
-## Exemplo preenchido
+## Exemplo preenchido (Peguei como referência capitulo 5 Gerenciamento de Testes do CTFL)
 
 | Campo | Valor |
 |---|---|
