@@ -1,11 +1,11 @@
 import { test, expect } from '../../src/fixtures/fixtures';
 
 /**
- * covers: UI-03
- * Secondary but user-visible flow: sending a message through the contact
- * form on the home page.
+ * cobre: UI-03
+ * Fluxo secundario mas visivel ao usuario: enviar uma mensagem pelo
+ * formulario de contato na pagina inicial.
  */
-test('UI-03 sends a contact message and sees a confirmation', async ({ homePage, page }) => {
+test('UI-03 envia uma mensagem de contato e ve uma confirmacao', async ({ homePage, page }) => {
   await homePage.goto();
 
   await homePage.sendContactMessage({
