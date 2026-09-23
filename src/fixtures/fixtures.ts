@@ -1,22 +1,22 @@
 import { test as base } from '@playwright/test';
-import { HomePage } from '../pages/HomePage';
-import { BookingApiClient } from '../api/BookingApiClient';
+import { PaginaInicial } from '../pages/HomePage';
+import { ClienteApiReservas } from '../api/BookingApiClient';
 
 type Fixtures = {
-  homePage: HomePage;
-  bookingApi: BookingApiClient;
+  paginaInicial: PaginaInicial;
+  apiReservas: ClienteApiReservas;
 };
 
 /**
- * Custom fixtures so tests receive ready-to-use page objects / API clients
- * instead of constructing them by hand in every test file.
+ * Fixtures customizadas para que os testes recebam page objects / clientes de
+ * API prontos para uso, em vez de os construir a mao em cada arquivo de teste.
  */
 export const test = base.extend<Fixtures>({
-  homePage: async ({ page }, use) => {
-    await use(new HomePage(page));
+  paginaInicial: async ({ page }, use) => {
+    await use(new PaginaInicial(page));
   },
-  bookingApi: async ({ request }, use) => {
-    await use(new BookingApiClient(request));
+  apiReservas: async ({ request }, use) => {
+    await use(new ClienteApiReservas(request));
   },
 });
 
