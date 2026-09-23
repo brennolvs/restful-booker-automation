@@ -1,12 +1,12 @@
 import { test, expect } from '../../src/fixtures/fixtures';
 
 /**
- * covers: UI-01, UI-02
- * Critical path: a guest can see the available rooms and complete a
- * reservation for one of them.
+ * cobre: UI-01, UI-02
+ * Fluxo critico: um hospede consegue ver os quartos disponiveis e concluir
+ * uma reserva para um deles.
  */
 test.describe('Room booking', () => {
-  test('UI-01 shows the three available rooms on the home page', async ({ homePage, page }) => {
+  test('UI-01 mostra os tres quartos disponiveis na pagina inicial', async ({ homePage, page }) => {
     await homePage.goto();
 
     await expect(page.getByRole('heading', { name: 'Single' })).toBeVisible();
@@ -14,34 +14,34 @@ test.describe('Room booking', () => {
     await expect(page.getByRole('heading', { name: 'Suite' })).toBeVisible();
   });
 
-  test('UI-02 books the Single room and receives a confirmation', async ({ homePage }) => {
-    const { checkin, checkout } = nextTwoNights();
+  test('UI-02 reserva o quarto Single e recebe uma confirmacao', async ({ homePage }) => {
+    const { checkin, checkout } = proximasDuasNoites();
 
-    const reservationPage = await homePage.bookRoom('Single', { checkin, checkout });
+    const paginaReserva = await homePage.bookRoom('Single', { checkin, checkout });
 
-    await reservationPage.proceedToGuestDetails();
-    await reservationPage.fillGuestDetails({
+    await paginaReserva.proceedToGuestDetails();
+    await paginaReserva.fillGuestDetails({
       firstName: 'Brenno',
       lastName: 'Alves',
       email: 'brenno.qa.test@example.com',
       phone: '01234567890',
     });
-    await reservationPage.confirmReservation();
+    await paginaReserva.confirmReservation();
 
-    await reservationPage.expectBookingConfirmed(checkin, checkout);
+    await paginaReserva.expectBookingConfirmed(checkin, checkout);
   });
 });
 
-/** Returns tomorrow / day-after-tomorrow as YYYY-MM-DD, so the test never depends on a fixed date. */
-function nextTwoNights() {
-  const toISODate = (d: Date) => d.toISOString().slice(0, 10);
-  const today = new Date();
+/** Retorna amanha / depois de amanha no formato YYYY-MM-DD, assim o teste nunca depende de uma data fixa. */
+function proximasDuasNoites() {
+  const paraDataISO = (d: Date) => d.toISOString().slice(0, 10);
+  const hoje = new Date();
 
-  const checkinDate = new Date(today);
-  checkinDate.setDate(today.getDate() + 1);
+  const dataCheckin = new Date(hoje);
+  dataCheckin.setDate(hoje.getDate() + 1);
 
-  const checkoutDate = new Date(today);
-  checkoutDate.setDate(today.getDate() + 2);
+  const dataCheckout = new Date(hoje);
+  dataCheckout.setDate(hoje.getDate() + 2);
 
-  return { checkin: toISODate(checkinDate), checkout: toISODate(checkoutDate) };
+  return { checkin: paraDataISO(dataCheckin), checkout: paraDataISO(dataCheckout) };
 }
