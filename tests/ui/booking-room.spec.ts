@@ -6,29 +6,29 @@ import { test, expect } from '../../src/fixtures/fixtures';
  * uma reserva para um deles.
  */
 test.describe('Room booking', () => {
-  test('UI-01 mostra os tres quartos disponiveis na pagina inicial', async ({ homePage, page }) => {
-    await homePage.goto();
+  test('UI-01 mostra os tres quartos disponiveis na pagina inicial', async ({ paginaInicial, page }) => {
+    await paginaInicial.acessar();
 
     await expect(page.getByRole('heading', { name: 'Single' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Double' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Suite' })).toBeVisible();
   });
 
-  test('UI-02 reserva o quarto Single e recebe uma confirmacao', async ({ homePage }) => {
+  test('UI-02 reserva o quarto Single e recebe uma confirmacao', async ({ paginaInicial }) => {
     const { checkin, checkout } = proximasDuasNoites();
 
-    const paginaReserva = await homePage.bookRoom('Single', { checkin, checkout });
+    const paginaReserva = await paginaInicial.reservarQuarto('Single', { checkin, checkout });
 
-    await paginaReserva.proceedToGuestDetails();
-    await paginaReserva.fillGuestDetails({
-      firstName: 'Brenno',
-      lastName: 'Alves',
+    await paginaReserva.avancarParaDadosHospede();
+    await paginaReserva.preencherDadosHospede({
+      nome: 'Brenno',
+      sobrenome: 'Alves',
       email: 'brenno.qa.test@example.com',
-      phone: '01234567890',
+      telefone: '01234567890',
     });
-    await paginaReserva.confirmReservation();
+    await paginaReserva.confirmarReserva();
 
-    await paginaReserva.expectBookingConfirmed(checkin, checkout);
+    await paginaReserva.esperarReservaConfirmada(checkin, checkout);
   });
 });
 
