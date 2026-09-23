@@ -106,8 +106,8 @@ lugares.
 
 1. **Fase 1 — Fundação:** estrutura do projeto, configuração do Playwright, primeiro teste de API e de UI passando localmente.
 2. **Fase 2 — Cobertura:** completar os casos de teste das seções 4 (API CRUD completo + fluxos de UI).
-3. **Fase 3 — CI/CD:** pipeline no GitHub Actions com relatório publicado. ✅ **Concluída** — ver seção 9.
-4. **Fase 4 — Performance:** smoke test com k6 integrado ao pipeline (job separado, não bloqueante). ✅ **Concluída** — ver seções 8.1 a 8.4.
+3. **Fase 3 — CI/CD:** pipeline no GitHub Actions com relatório publicado. 
+4. **Fase 4 — Performance:** smoke test com k6 integrado ao pipeline (job separado, não bloqueante).
 
 ### 8.1 Escopo atual
 
