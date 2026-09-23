@@ -1,15 +1,10 @@
-# Restful-Booker Automation Framework
+# Projeto Restful-Booker Automation Framework
 
-<<<<<<< HEAD
-Projeto de portfólio que simula o ciclo completo de automação de testes de um QA Analyst:
-planejamento, automação de UI e API com Playwright, integração contínua, teste de performance e
-documentação de defeitos.
-=======
-> Projeto de estudos criado para praticar e consolidar automação de testes com Playwright, aplicando as boas práticas do CTFL fora do ambiente de trabalho.
-> Simula o ciclo completo que um QA Analyst percorre em um projeto
-> real: planejamento, automação de UI e API, integração contínua, teste de performance e
-> documentação de defeitos. Também serve como peça de portfólio.
->>>>>>> origin/main
+> Projeto de estudos criado para praticar e consolidar automação de testes com Playwright,
+> aplicando as boas práticas do CTFL fora do ambiente de trabalho. Simula o ciclo completo que um
+> QA Analyst percorre em um projeto real (planejamento, automação de UI e API, integração
+> contínua, teste de performance e documentação de defeitos) e também serve como 
+> portfólio.
 
 > O plano de testes completo (escopo, estratégia baseada em risco, casos de teste e roadmap) está
 > em [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md).
@@ -18,11 +13,11 @@ documentação de defeitos.
 
 | Camada | Aplicação | URL |
 |---|---|---|
-| UI  | Restful-Booker-Platform ("Shady Meadows B&B") | https://automationintesting.online |
+| UI  | Restful-Booker-Platform | https://automationintesting.online |
 | API | Restful-Booker | https://restful-booker.herokuapp.com |
 
-Ambas são aplicações públicas mantidas por Mark Winteringham especificamente para prática de
-automação de testes — nenhum dado real é usado ou afetado.
+Ambas são aplicações públicas especificamente para prática de
+automação de testes então nenhum dado real é usado ou afetado.
 
 ## Stack
 
@@ -75,8 +70,7 @@ instala as dependências, roda a suíte completa e publica o relatório HTML com
 ## Roadmap
 
 Veja a seção "Fases de execução" do [plano de testes](docs/TEST_PLAN.md#8-fases-de-execução-roadmap-do-projeto)
-para o que já está implementado (Fases 1-3) e o que vem a seguir (BDD com Cucumber, painel admin,
-cross-browser).
+para o que já está implementado e o que vem a seguir.
 
 ## Autor
 
