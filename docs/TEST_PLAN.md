@@ -2,18 +2,33 @@
 
 ## 1. Contexto e objetivo
 
+<<<<<<< HEAD
 Este é um projeto de estudo que simula o ciclo completo de automação de testes de um QA
 Analyst: planejamento, automação (UI + API), integração contínua, teste de performance e
 documentação de defeitos. O objetivo não é encontrar bugs críticos em produção (a aplicação
 é um ambiente público de treinamento), e sim chegar ao mais próximo como um projeto de
+=======
+Este é um projeto de portfólio que simula o ciclo completo de automação de testes de um QA
+Analyst: planejamento, automação (UI + API), integração contínua, teste de performance e
+documentação de defeitos. O objetivo não é encontrar bugs críticos em produção (a aplicação-alvo
+é um ambiente público de treinamento), e sim demonstrar, de ponta a ponta, como um projeto de
+>>>>>>> origin/main
 automação profissional é estruturado e mantido.
 
 **Aplicações-alvo:**
 
+<<<<<<< HEAD
 - **UI** — [Restful-Booker-Platform](https://automationintesting.online) ,
   aplicação de reserva de hotel.
 - **API** — [Restful-Booker](https://restful-booker.herokuapp.com), a API de reservas
   usada isoladamente para a camada de testes de API.
+=======
+- **UI** — [Restful-Booker-Platform](https://automationintesting.online) ("Shady Meadows B&B"),
+  aplicação de reserva de hotel mantida por Mark Winteringham especificamente para prática de
+  automação de testes.
+- **API** — [Restful-Booker](https://restful-booker.herokuapp.com), a API de reservas
+  companheira do mesmo autor, usada isoladamente para a camada de testes de API.
+>>>>>>> origin/main
 
 ## 2. Escopo
 
@@ -29,12 +44,21 @@ automação profissional é estruturado e mantido.
 ### Fora do escopo (v1 — backlog para iterações futuras)
 
 - Painel administrativo (`/admin`) — login, gestão de quartos e mensagens
+<<<<<<< HEAD
 - Testes de carga completos (o k6 aqui é considerado um *smoke*, não um teste de carga real)
+=======
+- Testes de acessibilidade (poderia entrar como camada adicional depois)
+- Testes de carga completos (o k6 aqui é um *smoke*, não um teste de carga real)
+>>>>>>> origin/main
 - Testes cross-browser (v1 roda em Chromium; Firefox/WebKit ficam como próximo passo)
 
 ## 3. Estratégia de testes (baseada em risco)
 
+<<<<<<< HEAD
 Com base nos estudos CTFL a estratégia prioriza cobertura de API (mais rápida e estável) para
+=======
+Nem tudo tem o mesmo risco. A estratégia prioriza cobertura de API (mais rápida e estável) para
+>>>>>>> origin/main
 validar regras de negócio, e reserva a UI para os fluxos que o usuário realmente percorre.
 
 | Área                              | Risco (impacto x probabilidade) | Tipo de teste          | Por quê                                                   |
@@ -46,6 +70,7 @@ validar regras de negócio, e reserva a UI para os fluxos que o usuário realmen
 | Mensagem de contato (UI)            | Médio                            | E2E (UI)                | Fluxo secundário, mas visível ao usuário                    |
 | Consultar disponibilidade (UI)      | Médio                            | E2E (UI)                | Depende de estado (datas), risco de flakiness               |
 | Performance na criação de reserva   | Médio                            | Smoke de carga (k6)      | Indício de degradação antes de virar incidente              |
+<<<<<<< HEAD
 | Painel admin                        | Baixo                            | —                       | Não é o fluxo do usuário final; entra depois                |
 
 Segue a pirâmide de testes: a maior parte da cobertança fica na API (rápida, barata,
@@ -53,6 +78,15 @@ estável), a UI cobre só os caminhos críticos que o usuário realmente percorr
 entra como uma camada fina de verificação, não como suíte completa.
 
 ## 4. Casos de teste 
+=======
+| Painel admin                        | Baixo (fora do escopo da v1)     | —                       | Não é o fluxo do usuário final; entra depois                |
+
+Isso segue a pirâmide de testes: a maior parte da cobertança fica na API (rápida, barata,
+estável), a UI cobre só os caminhos críticos que o usuário realmente percorre, e a performance
+entra como uma camada fina de verificação, não como suíte completa.
+
+## 4. Casos de teste (exemplos representativos)
+>>>>>>> origin/main
 
 | ID      | Camada | Cenário                                                        | Prioridade |
 |---------|--------|-----------------------------------------------------------------|------------|
@@ -73,7 +107,12 @@ lugares.
 
 ## 5. Ambientes e dados de teste
 
+<<<<<<< HEAD
 - **Ambiente:** os dois ambientes públicos de demonstração . URLs configuráveis via `.env` (`UI_BASE_URL`, `API_BASE_URL`) para permitir apontar
+=======
+- **Ambiente:** os dois ambientes públicos de demonstração (não há staging próprio — é a natureza
+  do projeto). URLs configuráveis via `.env` (`UI_BASE_URL`, `API_BASE_URL`) para permitir apontar
+>>>>>>> origin/main
   para uma instância local no futuro.
 - **Dados:** gerados dinamicamente em cada execução (nome, datas relativas ao dia da execução)
   para evitar dependência de estado entre execuções e permitir rodar em paralelo sem colisão.
@@ -82,11 +121,19 @@ lugares.
 
 ## 6. Critérios de entrada e saída
 
+<<<<<<< HEAD
 **Entrada :**
 - Ambiente de execução configurado (`.env` preenchido)
 - Aplicações-alvo respondendo (smoke check `GET /ping` e home da UI)
 
 **Saída :**
+=======
+**Entrada (para considerar a v1 pronta para rodar em CI):**
+- Ambiente de execução configurado (`.env` preenchido)
+- Aplicações-alvo respondendo (smoke check `GET /ping` e home da UI)
+
+**Saída (definição de pronto da v1):**
+>>>>>>> origin/main
 - Todos os casos de teste da tabela da seção 4 implementados e passando
 - Pipeline de CI verde no branch principal
 - Relatório HTML publicado como artefato do CI

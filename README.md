@@ -1,8 +1,15 @@
 # Restful-Booker Automation Framework
 
+<<<<<<< HEAD
 Projeto de portfólio que simula o ciclo completo de automação de testes de um QA Analyst:
 planejamento, automação de UI e API com Playwright, integração contínua, teste de performance e
 documentação de defeitos.
+=======
+> Projeto de estudos criado para praticar e consolidar automação de testes com Playwright, aplicando as boas práticas do CTFL fora do ambiente de trabalho.
+> Simula o ciclo completo que um QA Analyst percorre em um projeto
+> real: planejamento, automação de UI e API, integração contínua, teste de performance e
+> documentação de defeitos. Também serve como peça de portfólio.
+>>>>>>> origin/main
 
 > O plano de testes completo (escopo, estratégia baseada em risco, casos de teste e roadmap) está
 > em [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md).
