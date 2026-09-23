@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: # aqui irei permitir rodar manualmente pela aba Actions
+
+permissions:
+  contents: read
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configura Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instala dependências
+        run: npm ci
+
+      - name: Instala browsers do Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Roda os testes (UI + API)
+        run: npm test
+
+      - name: Publica relatório como artifact
+        uses: actions/upload-artifact@v4
+        if: always()  # força a publicação mesmo se um teste falhar
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
+  publica-relatorio:
+    needs: testes
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+
+      - name: Publica no GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: playwright-report
