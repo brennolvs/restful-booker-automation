@@ -3,10 +3,10 @@
 ## 1. Contexto e objetivo
 
 Este é um projeto de estudo que simula o ciclo completo de automação de testes de um QA
-Analyst: planejamento, automação (UI + API), integração contínua, teste de performance e
+Analyst/Engenheiro de testes: planejamento, automação (UI + API), integração contínua, teste de performance e
 documentação de defeitos. O objetivo não é encontrar bugs críticos em produção (a aplicação
 é um ambiente público de treinamento), e sim chegar ao mais próximo como um projeto de
-automação profissional é estruturado e mantido.
+automação é estruturado e mantido.
 
 **Aplicações-alvo:**
 
@@ -17,7 +17,7 @@ automação profissional é estruturado e mantido.
 
 ## 2. Escopo
 
-### Dentro do escopo (v1)
+### Dentro do escopo 
 
 - Fluxo de reserva de quarto (happy path e principais validações) — UI
 - Formulário de contato — UI
@@ -26,25 +26,25 @@ automação profissional é estruturado e mantido.
 - Smoke test de performance no endpoint de criação de reserva — k6
 - Pipeline de CI rodando UI + API a cada push/PR
 
-### Fora do escopo (v1 — backlog para iterações futuras)
+### Fora do escopo
 
 - Painel administrativo (`/admin`) — login, gestão de quartos e mensagens
 - Testes de carga completos (o k6 aqui é considerado um *smoke*, não um teste de carga real)
-- Testes cross-browser (v1 roda em Chromium; Firefox/WebKit ficam como próximo passo)
+- Testes cross-browser 
 
 ## 3. Estratégia de testes (baseada em risco)
 
-Com base nos estudos CTFL a estratégia prioriza cobertura de API (mais rápida e estável) para
+Com base nos estudos CTFL (Capítulo 5 - Gerenciamento de Testes) a estratégia prioriza cobertura de API (mais rápida e estável) para
 validar regras de negócio, e reserva a UI para os fluxos que o usuário realmente percorre.
 
 | Área                              | Risco (impacto x probabilidade) | Tipo de teste          | Por quê                                                   |
 |-----------------------------------|----------------------------------|-------------------------|------------------------------------------------------------|
-| Criar reserva (API)                | Alto                             | API                     | Regra de negócio central; qualquer quebra afeta tudo acima |
+| Criar reserva (API)                | Alto                             | API                     | Regra de negócio central |
 | Autenticação / token (API)          | Alto                             | API                     | Protege operações de escrita (update/delete)                |
 | Atualizar/cancelar reserva (API)    | Alto                             | API                     | Ações irreversíveis, exigem validação de contrato           |
 | Reservar um quarto (UI)             | Alto                             | E2E (UI)                | Fluxo principal do usuário final                            |
 | Mensagem de contato (UI)            | Médio                            | E2E (UI)                | Fluxo secundário, mas visível ao usuário                    |
-| Consultar disponibilidade (UI)      | Médio                            | E2E (UI)                | Depende de estado (datas), risco de flakiness               |
+| Consultar disponibilidade (UI)      | Médio                            | E2E (UI)                | Depende de estado, risco de flakiness               |
 | Performance na criação de reserva   | Médio                            | Smoke de carga (k6)      | Indício de degradação antes de virar incidente              |
 | Painel admin                        | Baixo                            | —                       | Não é o fluxo do usuário final; entra depois                |
 
