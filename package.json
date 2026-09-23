@@ -1,7 +1,7 @@
 {
   "name": "restful-booker-automation",
   "version": "1.0.0",
-  "description": "Portfolio framework simulating a full QA automation cycle (UI + API + CI + performance) with Playwright, targeting Restful-Booker / Restful-Booker-Platform.",
+  "description": "Framework de estudo que simula um ciclo completo de automação de QA (UI + API + CI + performance) com Playwright, utilizando o Restful-Booker.",
   "private": true,
   "scripts": {
     "test": "playwright test",
