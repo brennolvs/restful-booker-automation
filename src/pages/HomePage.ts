@@ -1,69 +1,69 @@
 import { Page, Locator } from '@playwright/test';
-import { RoomReservationPage } from './RoomReservationPage';
+import { PaginaReservaQuarto } from './RoomReservationPage';
 
 /**
- * Home page of the Shady Meadows B&B (Restful-Booker-Platform).
- * Lists the available rooms and links to the reservation flow for each.
+ * Pagina inicial do Shady Meadows B&B (Restful-Booker-Platform).
+ * Lista os quartos disponiveis e da acesso ao fluxo de reserva de cada um.
  */
-export class HomePage {
+export class PaginaInicial {
   readonly page: Page;
-  readonly roomHeadings: Locator;
-  readonly contactForm: {
-    name: Locator;
+  readonly titulosQuartos: Locator;
+  readonly formularioContato: {
+    nome: Locator;
     email: Locator;
-    phone: Locator;
-    subject: Locator;
-    message: Locator;
-    submit: Locator;
+    telefone: Locator;
+    assunto: Locator;
+    mensagem: Locator;
+    enviar: Locator;
   };
 
   constructor(page: Page) {
     this.page = page;
-    this.roomHeadings = page.locator('h4, h3, h2').filter({ hasText: /Single|Double|Suite/ });
-    this.contactForm = {
-      name: page.getByLabel('Name', { exact: true }),
+    this.titulosQuartos = page.locator('h4, h3, h2').filter({ hasText: /Single|Double|Suite/ });
+    this.formularioContato = {
+      nome: page.getByLabel('Name', { exact: true }),
       email: page.getByLabel('Email', { exact: true }),
-      phone: page.getByLabel('Phone', { exact: true }),
-      subject: page.getByLabel('Subject', { exact: true }),
-      message: page.getByLabel('Message', { exact: true }),
-      submit: page.getByRole('button', { name: 'Submit' }),
+      telefone: page.getByLabel('Phone', { exact: true }),
+      assunto: page.getByLabel('Subject', { exact: true }),
+      mensagem: page.getByLabel('Message', { exact: true }),
+      enviar: page.getByRole('button', { name: 'Submit' }),
     };
   }
 
-  private static readonly ROOM_IDS = { Single: 1, Double: 2, Suite: 3 } as const;
+  private static readonly IDS_DOS_QUARTOS = { Single: 1, Double: 2, Suite: 3 } as const;
 
-  async goto() {
+  async acessar() {
     await this.page.goto('/');
   }
 
   /**
-   * Navigates straight to the reservation page for a room, with explicit
-   * check-in/check-out dates baked into the URL. Navigating directly (rather
-   * than clicking the home page's "Book now" link, which carries whatever
-   * dates happen to be in the availability widget) keeps the test
-   * deterministic regardless of "today"'s date.
+   * Navega direto para a pagina de reserva de um quarto, com as datas de
+   * checkin/checkout ja embutidas na URL. Navegar direto (em vez de clicar no
+   * link "Book now" da pagina inicial, que carrega as datas que estiverem no
+   * widget de disponibilidade) mantem o teste deterministico, independente
+   * da data de "hoje".
    */
-  async bookRoom(
-    roomName: keyof typeof HomePage.ROOM_IDS,
-    dates: { checkin: string; checkout: string }
-  ): Promise<RoomReservationPage> {
-    const roomId = HomePage.ROOM_IDS[roomName];
-    await this.page.goto(`/reservation/${roomId}?checkin=${dates.checkin}&checkout=${dates.checkout}`);
-    return new RoomReservationPage(this.page);
+  async reservarQuarto(
+    nomeQuarto: keyof typeof PaginaInicial.IDS_DOS_QUARTOS,
+    datas: { checkin: string; checkout: string }
+  ): Promise<PaginaReservaQuarto> {
+    const idQuarto = PaginaInicial.IDS_DOS_QUARTOS[nomeQuarto];
+    await this.page.goto(`/reservation/${idQuarto}?checkin=${datas.checkin}&checkout=${datas.checkout}`);
+    return new PaginaReservaQuarto(this.page);
   }
 
-  async sendContactMessage(data: {
-    name: string;
+  async enviarMensagemContato(dados: {
+    nome: string;
     email: string;
-    phone: string;
-    subject: string;
-    message: string;
+    telefone: string;
+    assunto: string;
+    mensagem: string;
   }) {
-    await this.contactForm.name.fill(data.name);
-    await this.contactForm.email.fill(data.email);
-    await this.contactForm.phone.fill(data.phone);
-    await this.contactForm.subject.fill(data.subject);
-    await this.contactForm.message.fill(data.message);
-    await this.contactForm.submit.click();
+    await this.formularioContato.nome.fill(dados.nome);
+    await this.formularioContato.email.fill(dados.email);
+    await this.formularioContato.telefone.fill(dados.telefone);
+    await this.formularioContato.assunto.fill(dados.assunto);
+    await this.formularioContato.mensagem.fill(dados.mensagem);
+    await this.formularioContato.enviar.click();
   }
 }
