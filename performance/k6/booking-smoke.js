@@ -1,15 +1,15 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
-// Smoke test: a handful of virtual users hitting POST /booking, just to
-// catch an obvious regression before it becomes an incident. This is NOT a
-// load test — see docs/TEST_PLAN.md section 8 for the load-test roadmap.
+// Smoke test: um pouco de usuários virtuais batendo em POST /booking, só
+// pra pegar uma regressão óbvia antes que vire um incidente. Isso NÃO é um
+// teste de carga. ver docs/TEST_PLAN.md seção 8 pro roadmap de load test.
 export const options = {
   vus: 5,
   duration: '30s',
   thresholds: {
-    http_req_duration: ['p(95)<800'], // 95% of requests must complete under 800ms
-    http_req_failed: ['rate<0.01'], // fewer than 1% failed requests
+    http_req_duration: ['p(95)<800'], // 95% das requisições devem completar em menos de 800ms
+    http_req_failed: ['rate<0.01'], // menos de 1% de requisições com falha
   },
 };
 
@@ -30,8 +30,8 @@ export default function () {
   });
 
   check(res, {
-    'status is 200': (r) => r.status === 200,
-    'response has bookingid': (r) => JSON.parse(r.body).bookingid !== undefined,
+    'status é 200': (r) => r.status === 200,
+    'a resposta contém o bookingid': (r) => JSON.parse(r.body).bookingid !== undefined,
   });
 
   sleep(1);
