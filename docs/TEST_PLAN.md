@@ -110,6 +110,58 @@ lugares.
 4. **Fase 4 — Performance:** smoke test com k6 integrado ao pipeline (job separado, não bloqueante).
 5. **Fase 5 — Extras:** BDD (Cucumber) para os cenários mais representativos, painel admin, cross-browser.
 
+### 8.1 Escopo atual
+
+O script `performance/k6/booking-smoke.js` implementa um **smoke test** de
+performance (não um teste de carga) contra o endpoint `POST /booking` da API
+pública de demonstração `restful-booker.herokuapp.com`. O objetivo original
+era detectar regressões grosseiras de latência antes que virassem incidente,
+usando poucos VUs (2) e uma pausa de 3s entre iterações.
+
+### 8.2 Limitação conhecida
+
+Ao rodar o teste (`npm run test:perf`), a API retorna consistentemente
+`HTTP 418 I'm a Teapot` para as requisições `POST /booking` originadas do k6,
+mesmo com apenas 2 VUs e ~1 requisição a cada 3 segundos — um volume muito
+abaixo do que caracterizaria uma rajada de tráfego real.
+
+**Investigação realizada:**
+
+- `GET /ping` continua respondendo `201 Created` durante todo o teste,
+  descartando um bloqueio de IP genérico.
+- Requisições manuais equivalentes via `curl` e via Playwright (`npm run
+  test:api`) são aceitas normalmente (`200`/`201`), usando o mesmo IP e a
+  mesma rede.
+- A diferença observável entre essas ferramentas e o k6 é o header
+  `User-Agent` (`k6/x.x.x`), o que sugere fingerprinting/bloqueio
+  específico para tráfego identificado como ferramenta de teste de carga.
+
+**Conclusão:** a API pública de demonstração aplica uma proteção
+intencional contra tráfego de load testing. Isso está fora do controle do
+projeto — trata-se de um recurso público e gratuito mantido por terceiros,
+e contornar essa proteção (por exemplo, falsificando o `User-Agent`) não é
+uma prática apropriada nem alinhada ao propósito do projeto.
+
+### 8.3 Como o resultado deve ser interpretado
+
+- `npm run test:perf` **não é um gate obrigatório de CI** neste projeto. Ele
+  é mantido como prova de conceito / demonstração de como um teste de
+  performance seria estruturado (VUs, thresholds, checks, pacing) caso o
+  projeto rodasse contra um ambiente próprio ou um mock controlado.
+- Um resultado com `http_req_failed` alto contra o ambiente público **é
+  esperado** e não deve ser tratado como regressão do código sob teste.
+- Os `thresholds` definidos no script (`p(95)<800ms`, `rate<0.01`)
+  permanecem documentados como o critério que *seria* usado em um ambiente
+  sob nosso controle.
+
+### 8.4 Próximos passos (roadmap, não implementado)
+
+- Rodar o smoke test contra uma instância própria da aplicação (self-hosted
+  `restful-booker`) ou contra um mock/stub do endpoint `/booking`, eliminando
+  a dependência de um serviço público compartilhado.
+- Caso role uma instância própria, reavaliar os thresholds com dados reais
+  de baseline.
+
 ## 9. Riscos do próprio projeto
 
 - **Instabilidade do ambiente público de demo** — fora do nosso controle; mitigação: retries
