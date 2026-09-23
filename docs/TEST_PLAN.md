@@ -106,8 +106,8 @@ lugares.
 
 1. **Fase 1 — Fundação:** estrutura do projeto, configuração do Playwright, primeiro teste de API e de UI passando localmente.
 2. **Fase 2 — Cobertura:** completar os casos de teste das seções 4 (API CRUD completo + fluxos de UI).
-3. **Fase 3 — CI/CD:** pipeline no GitHub Actions com relatório publicado.
-4. **Fase 4 — Performance:** smoke test com k6 integrado ao pipeline (job separado, não bloqueante).
+3. **Fase 3 — CI/CD:** pipeline no GitHub Actions com relatório publicado. ✅ **Concluída** — ver seção 9.
+4. **Fase 4 — Performance:** smoke test com k6 integrado ao pipeline (job separado, não bloqueante). ✅ **Concluída** — ver seções 8.1 a 8.4.
 
 ### 8.1 Escopo atual
 
@@ -161,7 +161,42 @@ uma prática apropriada nem alinhada ao propósito do projeto.
 - Caso role uma instância própria, reavaliar os thresholds com dados reais
   de baseline.
 
-## 9. Riscos do próprio projeto
+## 9. CI/CD
+
+### 9.1 O que o pipeline faz
+
+O workflow `.github/workflows/ci.yml` roda automaticamente a cada `push`/`pull request`
+na `main` (e também pode ser disparado manualmente pela aba Actions, via
+`workflow_dispatch`). Ele tem dois jobs:
+
+- **`testes`** — faz checkout do código, instala as dependências, instala o Chromium do
+  Playwright e roda `npm test` (UI + API). O relatório HTML é salvo como artifact mesmo
+  se algum teste falhar (`if: always()`), pra nunca perder a evidência de uma falha.
+- **`publica-relatorio`** — pega esse relatório e publica no GitHub Pages (branch
+  `gh-pages`), deixando o resultado da última execução sempre acessível em:
+
+  `https://brennolvs.github.io/restful-booker-automation/`
+
+O `npm run test:perf` (k6) **não** faz parte desse pipeline — ver seção 8.3 sobre por
+que ele não é tratado como gate de CI.
+
+### 9.2 Limitação conhecida — instabilidade de rede em testes de UI no CI
+
+Assim como o k6 (seção 8.2), os testes de UI que rodam no CI dependem de acesso de
+rede a um site público de terceiros (`automationintesting.online`), a partir da
+infraestrutura do GitHub Actions (IPs de datacenter, fora do nosso controle). Já foi
+observada uma execução em que o Chromium não conseguiu carregar a página durante o
+teste (erro de navegador "This page couldn't load", visível no screenshot/trace do
+teste — não um erro do código sob teste), e uma nova execução logo em seguida passou
+normalmente.
+
+**Conclusão:** uma falha ocasional de UI no CI, especialmente acompanhada desse tipo
+de erro de carregamento de página, deve ser tratada primeiro como possível
+instabilidade de rede do ambiente público, e só depois investigada como regressão de
+código. O primeiro passo de triagem é usar **Re-run failed jobs** na execução e
+conferir se o erro se repete.
+
+## 10. Riscos do próprio projeto
 
 - **Instabilidade do ambiente público de demo** — fora do nosso controle; mitigação: retries
   configurados no CI e um smoke check antes da suíte principal.
