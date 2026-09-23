@@ -25,7 +25,7 @@ export class PaginaInicial {
       email: page.getByLabel('Email', { exact: true }),
       telefone: page.getByLabel('Phone', { exact: true }),
       assunto: page.getByLabel('Subject', { exact: true }),
-      mensagem: page.getByLabel('Message', { exact: true }),
+      mensagem: page.getByTestId('ContactDescription'),
       enviar: page.getByRole('button', { name: 'Submit' }),
     };
   }
