@@ -2,33 +2,18 @@
 
 ## 1. Contexto e objetivo
 
-<<<<<<< HEAD
 Este é um projeto de estudo que simula o ciclo completo de automação de testes de um QA
 Analyst: planejamento, automação (UI + API), integração contínua, teste de performance e
 documentação de defeitos. O objetivo não é encontrar bugs críticos em produção (a aplicação
 é um ambiente público de treinamento), e sim chegar ao mais próximo como um projeto de
-=======
-Este é um projeto de portfólio que simula o ciclo completo de automação de testes de um QA
-Analyst: planejamento, automação (UI + API), integração contínua, teste de performance e
-documentação de defeitos. O objetivo não é encontrar bugs críticos em produção (a aplicação-alvo
-é um ambiente público de treinamento), e sim demonstrar, de ponta a ponta, como um projeto de
->>>>>>> origin/main
 automação profissional é estruturado e mantido.
 
 **Aplicações-alvo:**
 
-<<<<<<< HEAD
 - **UI** — [Restful-Booker-Platform](https://automationintesting.online) ,
   aplicação de reserva de hotel.
 - **API** — [Restful-Booker](https://restful-booker.herokuapp.com), a API de reservas
   usada isoladamente para a camada de testes de API.
-=======
-- **UI** — [Restful-Booker-Platform](https://automationintesting.online) ("Shady Meadows B&B"),
-  aplicação de reserva de hotel mantida por Mark Winteringham especificamente para prática de
-  automação de testes.
-- **API** — [Restful-Booker](https://restful-booker.herokuapp.com), a API de reservas
-  companheira do mesmo autor, usada isoladamente para a camada de testes de API.
->>>>>>> origin/main
 
 ## 2. Escopo
 

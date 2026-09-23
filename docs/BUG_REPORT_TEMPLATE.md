@@ -1,20 +1,12 @@
 # Template de Relato de Bug (16 campos)
 
-<<<<<<< HEAD
 > Modelo genérico baseado nos estudos de ctfl de 16 campos para documentar bugs encontrados durante a automação ou testes
-=======
-> Modelo genérico de 16 campos para documentar bugs encontrados durante a automação ou testes
->>>>>>> origin/main
 > exploratórios neste projeto. Ajuste os campos livremente para o template real que você já usa
 > no trabalho.
 
 | # | Campo                  | Descrição                                                        |
 |---|--------------------------|---------------------------------------------------------------------|
-<<<<<<< HEAD
 | 1 | ID                      | Identificador único do bug                          |
-=======
-| 1 | ID                      | Identificador único do bug (ex: BUG-001)                            |
->>>>>>> origin/main
 | 2 | Título                  | Resumo curto e objetivo do problema                                  |
 | 3 | Data                    | Data em que o bug foi encontrado                                     |
 | 4 | Reportado por           | Quem encontrou/registrou                                             |
