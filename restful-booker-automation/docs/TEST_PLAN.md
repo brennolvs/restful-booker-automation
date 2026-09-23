@@ -2,59 +2,59 @@
 
 ## 1. Contexto e objetivo
 
-Este é um projeto de portfólio que simula o ciclo completo de automação de testes de um QA
+Este é um projeto de estudos que simula o ciclo completo de automação de testes de um QA
 Analyst: planejamento, automação (UI + API), integração contínua, teste de performance e
-documentação de defeitos. O objetivo não é encontrar bugs críticos em produção (a aplicação-alvo
+documentação de defeitos. O objetivo não é encontrar bugs críticos em produção (a aplicação
 é um ambiente público de treinamento), e sim demonstrar, de ponta a ponta, como um projeto de
-automação profissional é estruturado e mantido.
+automação é estruturado e mantido.
 
 **Aplicações-alvo:**
 
-- **UI** — [Restful-Booker-Platform](https://automationintesting.online) ("Shady Meadows B&B"),
-  aplicação de reserva de hotel mantida por Mark Winteringham especificamente para prática de
+- **UI** — [Restful-Booker-Platform](https://automationintesting.online) ,
+  aplicação de reserva de hotel mantida especificamente para prática de
   automação de testes.
-- **API** — [Restful-Booker](https://restful-booker.herokuapp.com), a API de reservas
-  companheira do mesmo autor, usada isoladamente para a camada de testes de API.
+- **API** — [Restful-Booker](https://restful-booker.herokuapp.com), a API de reservas, 
+  usada isoladamente para a camada de testes de API.
 
 ## 2. Escopo
 
-### Dentro do escopo (v1)
+### Dentro do escopo 
 
-- Fluxo de reserva de quarto (happy path e principais validações) — UI
+- Fluxo de reserva de quarto (principais validações) — UI
 - Formulário de contato — UI
 - CRUD completo de reservas (criar, consultar, atualizar, remover) — API
 - Autenticação e uso de token — API
 - Smoke test de performance no endpoint de criação de reserva — k6
 - Pipeline de CI rodando UI + API a cada push/PR
 
-### Fora do escopo (v1 — backlog para iterações futuras)
+### Fora do escopo (backlog para iterações futuras)
 
 - Painel administrativo (`/admin`) — login, gestão de quartos e mensagens
-- Testes de acessibilidade (poderia entrar como camada adicional depois)
-- Testes de carga completos (o k6 aqui é um *smoke*, não um teste de carga real)
-- Testes cross-browser (v1 roda em Chromium; Firefox/WebKit ficam como próximo passo)
+- Testes de acessibilidade
+- Testes de carga completos (o k6 aqui é teóricamente um *smoke*, não de faot um teste de carga real)
+- Testes cross-browser
 
 ## 3. Estratégia de testes (baseada em risco)
 
-Nem tudo tem o mesmo risco. A estratégia prioriza cobertura de API (mais rápida e estável) para
+A estratégia que eu resolvi utilizar prioriza cobertura de API (mais rápida e estável) para
 validar regras de negócio, e reserva a UI para os fluxos que o usuário realmente percorre.
 
 | Área                              | Risco (impacto x probabilidade) | Tipo de teste          | Por quê                                                   |
 |-----------------------------------|----------------------------------|-------------------------|------------------------------------------------------------|
-| Criar reserva (API)                | Alto                             | API                     | Regra de negócio central; qualquer quebra afeta tudo acima |
+| Criar reserva (API)                | Alto                             | API                     | Regra de negócio central |
 | Autenticação / token (API)          | Alto                             | API                     | Protege operações de escrita (update/delete)                |
 | Atualizar/cancelar reserva (API)    | Alto                             | API                     | Ações irreversíveis, exigem validação de contrato           |
 | Reservar um quarto (UI)             | Alto                             | E2E (UI)                | Fluxo principal do usuário final                            |
 | Mensagem de contato (UI)            | Médio                            | E2E (UI)                | Fluxo secundário, mas visível ao usuário                    |
-| Consultar disponibilidade (UI)      | Médio                            | E2E (UI)                | Depende de estado (datas), risco de flakiness               |
+| Consultar disponibilidade (UI)      | Médio                            | E2E (UI)                | Depende de estado, risco de flakiness               |
 | Performance na criação de reserva   | Médio                            | Smoke de carga (k6)      | Indício de degradação antes de virar incidente              |
 | Painel admin                        | Baixo (fora do escopo da v1)     | —                       | Não é o fluxo do usuário final; entra depois                |
 
-Isso segue a pirâmide de testes: a maior parte da cobertança fica na API (rápida, barata,
+Fiz me baseando na pirâmide de testes: a maior parte da cobertança fica na API (rápida, barata,
 estável), a UI cobre só os caminhos críticos que o usuário realmente percorre, e a performance
 entra como uma camada fina de verificação, não como suíte completa.
 
-## 4. Casos de teste (exemplos representativos)
+## 4. Casos de teste
 
 | ID      | Camada | Cenário                                                        | Prioridade |
 |---------|--------|-----------------------------------------------------------------|------------|
@@ -75,21 +75,21 @@ lugares.
 
 ## 5. Ambientes e dados de teste
 
-- **Ambiente:** os dois ambientes públicos de demonstração (não há staging próprio — é a natureza
-  do projeto). URLs configuráveis via `.env` (`UI_BASE_URL`, `API_BASE_URL`) para permitir apontar
+- **Ambiente:** os dois ambientes públicos de demonstração. 
+  URLs configuráveis via `.env` (`UI_BASE_URL`, `API_BASE_URL`) para permitir apontar
   para uma instância local no futuro.
 - **Dados:** gerados dinamicamente em cada execução (nome, datas relativas ao dia da execução)
   para evitar dependência de estado entre execuções e permitir rodar em paralelo sem colisão.
 - **Credenciais:** usuário de API de teste via variáveis de ambiente (`API_USERNAME`,
-  `API_PASSWORD`), nunca hardcoded no código.
+  `API_PASSWORD`).
 
 ## 6. Critérios de entrada e saída
 
-**Entrada (para considerar a v1 pronta para rodar em CI):**
+**Entrada:**
 - Ambiente de execução configurado (`.env` preenchido)
-- Aplicações-alvo respondendo (smoke check `GET /ping` e home da UI)
+- Aplicações-alvo respondendo ( `GET /ping` )
 
-**Saída (definição de pronto da v1):**
+**Saída:**
 - Todos os casos de teste da tabela da seção 4 implementados e passando
 - Pipeline de CI verde no branch principal
 - Relatório HTML publicado como artefato do CI
@@ -103,7 +103,7 @@ lugares.
 | CI/CD          | GitHub Actions                            |
 | Performance    | Grafana k6                                |
 | Relatórios     | Playwright HTML Reporter                  |
-| Documentação de bugs | Template próprio de 16 campos (ver `docs/BUG_REPORT_TEMPLATE.md`) |
+| Documentação de bugs | Template próprio de 16 campos (ver `docs/BUG_REPORT_TEMPLATE.md` ou  Capítulo 5: Gerenciamento de Testes CTFL) |
 
 ## 8. Fases de execução (roadmap do projeto)
 
@@ -111,7 +111,6 @@ lugares.
 2. **Fase 2 — Cobertura:** completar os casos de teste das seções 4 (API CRUD completo + fluxos de UI).
 3. **Fase 3 — CI/CD:** pipeline no GitHub Actions com relatório publicado.
 4. **Fase 4 — Performance:** smoke test com k6 integrado ao pipeline (job separado, não bloqueante).
-5. **Fase 5 — Extras:** BDD (Cucumber) para os cenários mais representativos, painel admin, cross-browser.
 
 ## 9. Riscos do próprio projeto
 
