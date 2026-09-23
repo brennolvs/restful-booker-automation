@@ -1,53 +1,53 @@
 import { Page, Locator, expect } from '@playwright/test';
 
 /**
- * Reservation page for a single room (/reservation/:id).
- * Two-step flow: pick dates on the calendar -> "Reserve Now" reveals the
- * guest-details form -> submitting it shows the confirmation message.
+ * Pagina de reserva de um quarto especifico (/reservation/:id).
+ * Fluxo em duas etapas: escolhe as datas no calendario -> "Reserve Now" abre
+ * o formulario de dados do hospede -> enviar mostra a mensagem de confirmacao.
  */
-export class RoomReservationPage {
+export class PaginaReservaQuarto {
   readonly page: Page;
-  readonly reserveNowButton: Locator;
-  readonly firstNameInput: Locator;
-  readonly lastNameInput: Locator;
-  readonly emailInput: Locator;
-  readonly phoneInput: Locator;
-  readonly confirmationHeading: Locator;
+  readonly botaoReservarAgora: Locator;
+  readonly campoNome: Locator;
+  readonly campoSobrenome: Locator;
+  readonly campoEmail: Locator;
+  readonly campoTelefone: Locator;
+  readonly tituloConfirmacao: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.reserveNowButton = page.getByRole('button', { name: 'Reserve Now' });
-    this.firstNameInput = page.getByPlaceholder('Firstname');
-    this.lastNameInput = page.getByPlaceholder('Lastname');
-    this.emailInput = page.getByPlaceholder('Email');
-    this.phoneInput = page.getByPlaceholder('Phone');
-    this.confirmationHeading = page.getByText('Booking Confirmed');
+    this.botaoReservarAgora = page.getByRole('button', { name: 'Reserve Now' });
+    this.campoNome = page.getByPlaceholder('Firstname');
+    this.campoSobrenome = page.getByPlaceholder('Lastname');
+    this.campoEmail = page.getByPlaceholder('Email');
+    this.campoTelefone = page.getByPlaceholder('Phone');
+    this.tituloConfirmacao = page.getByText('Booking Confirmed');
   }
 
-  /** Opens the guest-details form (first "Reserve Now" click on the calendar step). */
-  async proceedToGuestDetails() {
-    await this.reserveNowButton.click();
+  /** Abre o formulario de dados do hospede (primeiro clique em "Reserve Now" na etapa do calendario). */
+  async avancarParaDadosHospede() {
+    await this.botaoReservarAgora.click();
   }
 
-  async fillGuestDetails(guest: {
-    firstName: string;
-    lastName: string;
+  async preencherDadosHospede(hospede: {
+    nome: string;
+    sobrenome: string;
     email: string;
-    phone: string;
+    telefone: string;
   }) {
-    await this.firstNameInput.fill(guest.firstName);
-    await this.lastNameInput.fill(guest.lastName);
-    await this.emailInput.fill(guest.email);
-    await this.phoneInput.fill(guest.phone);
+    await this.campoNome.fill(hospede.nome);
+    await this.campoSobrenome.fill(hospede.sobrenome);
+    await this.campoEmail.fill(hospede.email);
+    await this.campoTelefone.fill(hospede.telefone);
   }
 
-  /** Submits the guest-details form (second "Reserve Now" click). */
-  async confirmReservation() {
-    await this.reserveNowButton.click();
+  /** Envia o formulario de dados do hospede (segundo clique em "Reserve Now"). */
+  async confirmarReserva() {
+    await this.botaoReservarAgora.click();
   }
 
-  async expectBookingConfirmed(checkin: string, checkout: string) {
-    await expect(this.confirmationHeading).toBeVisible();
+  async esperarReservaConfirmada(checkin: string, checkout: string) {
+    await expect(this.tituloConfirmacao).toBeVisible();
     await expect(this.page.getByText(`${checkin} - ${checkout}`)).toBeVisible();
   }
 }
