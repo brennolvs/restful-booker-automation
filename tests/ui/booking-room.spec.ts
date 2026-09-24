@@ -6,7 +6,7 @@ import { gerarPeriodoReserva } from '../../src/utils/datas';
  * Fluxo critico: um hospede consegue ver os quartos disponiveis e concluir
  * uma reserva para um deles.
  */
-test.describe('Room booking', () => {
+test.describe('Reserva de quarto', () => {
   test('UI-01 mostra os tres quartos disponiveis na pagina inicial', async ({ paginaInicial, page }) => {
     await paginaInicial.acessar();
 
