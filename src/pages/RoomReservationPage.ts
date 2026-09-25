@@ -1,10 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 
-/**
- * Pagina de reserva de um quarto especifico (/reservation/:id).
- * Fluxo em duas etapas: escolhe as datas no calendario -> "Reserve Now" abre
- * o formulario de dados do hospede -> enviar mostra a mensagem de confirmacao.
- */
+
 export class PaginaReservaQuarto {
   readonly page: Page;
   readonly botaoReservarAgora: Locator;

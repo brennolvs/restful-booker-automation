@@ -3,7 +3,7 @@ import type { Reserva } from '../../src/api/BookingApiClient';
 
 /**
  * Ciclo completo de CRUD contra a API do Restful-Booker.
- * cobre: API-01 .. API-06
+ * cobre: API-01 ao API-06
  */
 test.describe('Booking API', () => {
   test('API-01 ping responde com sucesso', async ({ apiReservas }) => {

@@ -36,13 +36,7 @@ export class PaginaInicial {
     await this.page.goto('/');
   }
 
-  /**
-   * Navega direto para a pagina de reserva de um quarto, com as datas de
-   * checkin/checkout ja embutidas na URL. Navegar direto (em vez de clicar no
-   * link "Book now" da pagina inicial, que carrega as datas que estiverem no
-   * widget de disponibilidade) mantem o teste deterministico, independente
-   * da data de "hoje".
-   */
+
   async reservarQuarto(
     nomeQuarto: keyof typeof PaginaInicial.IDS_DOS_QUARTOS,
     datas: { checkin: string; checkout: string }

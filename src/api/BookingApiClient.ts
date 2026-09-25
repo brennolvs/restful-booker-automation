@@ -15,9 +15,7 @@ export interface Reserva {
 }
 
 /**
- * Wrapper fino sobre a API do Restful-Booker, para que os testes leiam como
  * intencao de negocio ("criarReserva", "excluirReserva") em vez de chamadas
- * HTTP cruas.
  * https://restful-booker.herokuapp.com
  */
 export class ClienteApiReservas {
