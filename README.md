@@ -64,7 +64,7 @@ Para o smoke test de performance (requer [k6](https://k6.io/docs/get-started/ins
 ```bash
 npm run test:perf
 ```
-- `npm run test:perf`: smoke test de performance via k6 (prova de conceito). **Não roda no CI** — da uma olhada `docs/TEST_PLAN.md` seção 8.3 para a limitação conhecida (a API pública de demo bloqueia tráfego do k6 com `418`).
+- `npm run test:perf`: smoke test de performance via k6 (prova de conceito). **Não roda no CI**  da uma olhada `docs/TEST_PLAN.md` seção 8.3 para a limitação conhecida (a API pública de demo bloqueia tráfego do k6 com `418`).
 
 ## CI/CD
 
