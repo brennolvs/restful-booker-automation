@@ -14,10 +14,6 @@ export interface Reserva {
   additionalneeds?: string;
 }
 
-/**
- * intencao de negocio ("criarReserva", "excluirReserva") em vez de chamadas
- * https://restful-booker.herokuapp.com
- */
 export class ClienteApiReservas {
   constructor(private readonly requisicao: APIRequestContext) {}
 
@@ -25,7 +21,7 @@ export class ClienteApiReservas {
     return this.requisicao.get('/ping');
   }
 
-  /** POST /auth — retorna o token usado para autorizar operacoes de escrita. */
+  // POST /auth — retorna o token usado para autorizar operacoes de escrita. 
   async autenticar(nomeUsuario: string, senha: string): Promise<string> {
     const resposta = await this.requisicao.post('/auth', {
       data: { username: nomeUsuario, password: senha },
@@ -42,7 +38,7 @@ export class ClienteApiReservas {
     return this.requisicao.get(`/booking/${idReserva}`);
   }
 
-  /** PATCH /booking/:id — exige um token vindo de autenticar(). */
+  //  PATCH /booking/:id — exige um token vindo de autenticar(). 
   async atualizarReservaParcial(idReserva: number, token: string, dadosParciais: Partial<Reserva>) {
     return this.requisicao.patch(`/booking/${idReserva}`, {
       data: dadosParciais,
@@ -50,7 +46,7 @@ export class ClienteApiReservas {
     });
   }
 
-  /** DELETE /booking/:id — exige um token vindo de autenticar(). */
+  // DELETE /booking/:id — exige um token vindo de autenticar(). 
   async excluirReserva(idReserva: number, token: string) {
     return this.requisicao.delete(`/booking/${idReserva}`, {
       headers: { Cookie: `token=${token}` },

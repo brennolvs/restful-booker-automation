@@ -1,10 +1,6 @@
 import { test, expect } from '../../src/fixtures/fixtures';
 import type { Reserva } from '../../src/api/BookingApiClient';
 
-/**
- * Ciclo completo de CRUD contra a API do Restful-Booker.
- * cobre: API-01 ao API-06
- */
 test.describe('Booking API', () => {
   test('API-01 ping responde com sucesso', async ({ apiReservas }) => {
     const resposta = await apiReservas.ping();

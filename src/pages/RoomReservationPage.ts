@@ -1,6 +1,4 @@
 import { Page, Locator, expect } from '@playwright/test';
-
-
 export class PaginaReservaQuarto {
   readonly page: Page;
   readonly botaoReservarAgora: Locator;
@@ -20,7 +18,6 @@ export class PaginaReservaQuarto {
     this.tituloConfirmacao = page.getByText('Booking Confirmed');
   }
 
-  /** Abre o formulario de dados do hospede (primeiro clique em "Reserve Now" na etapa do calendario). */
   async avancarParaDadosHospede() {
     await this.botaoReservarAgora.click();
   }
@@ -37,7 +34,6 @@ export class PaginaReservaQuarto {
     await this.campoTelefone.fill(hospede.telefone);
   }
 
-  /** Envia o formulario de dados do hospede (segundo clique em "Reserve Now"). */
   async confirmarReserva() {
     await this.botaoReservarAgora.click();
   }

@@ -7,10 +7,6 @@ type Fixtures = {
   apiReservas: ClienteApiReservas;
 };
 
-/**
- * Fixtures customizadas para que os testes recebam page objects / clientes de
- * API prontos para uso, em vez de os construir a mao em cada arquivo de teste.
- */
 export const test = base.extend<Fixtures>({
   paginaInicial: async ({ page }, use) => {
     await use(new PaginaInicial(page));

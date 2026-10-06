@@ -1,9 +1,3 @@
-/**
- * Gera um periodo de reserva aleatorio no futuro, no formato YYYY-MM-DD.
- * Datas distantes e sorteadas reduzem a chance de colidir com reservas
- * feitas por outras execucoes (CI, local ou outros usuarios do site demo).
- */
-
 function formatarData(data: Date): string {
   // Usa getters locais (e nao toISOString) para evitar a virada de dia por fuso horario
   const ano = data.getFullYear();
@@ -13,7 +7,6 @@ function formatarData(data: Date): string {
 }
 
 function numeroAleatorio(min: number, max: number): number {
-  // Inteiro entre min e max (inclusive)
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 

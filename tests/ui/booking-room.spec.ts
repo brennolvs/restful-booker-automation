@@ -1,11 +1,6 @@
 import { test, expect } from '../../src/fixtures/fixtures';
 import { gerarPeriodoReserva } from '../../src/utils/datas';
 
-/**
- * cobre: UI-01, UI-02
- * Fluxo critico: um hospede consegue ver os quartos disponiveis e concluir
- * uma reserva para um deles.
- */
 test.describe('Reserva de quarto', () => {
   test('UI-01 mostra os tres quartos disponiveis na pagina inicial', async ({ paginaInicial, page }) => {
     await paginaInicial.acessar();

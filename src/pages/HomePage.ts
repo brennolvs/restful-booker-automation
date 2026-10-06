@@ -1,10 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 import { PaginaReservaQuarto } from './RoomReservationPage';
 
-/**
- * Pagina inicial do Shady Meadows B&B (Restful-Booker-Platform).
- * Lista os quartos disponiveis e da acesso ao fluxo de reserva de cada um.
- */
 export class PaginaInicial {
   readonly page: Page;
   readonly titulosQuartos: Locator;
